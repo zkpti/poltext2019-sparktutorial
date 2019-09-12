@@ -1,0 +1,89 @@
+# instructions for setting up Spark in local mode and RStudio Server on an Ubuntu 18.04 system
+# building on https://computingforgeeks.com/how-to-install-apache-spark-on-ubuntu-debian/ and https://cloud.google.com/solutions/running-rstudio-server-on-a-cloud-dataproc-cluster
+
+# make sure system is up to date
+sudo apt update
+sudo apt upgrade
+
+# check to see whether Java is installed
+java -version
+
+# if Java is not installed, or it is not version 8, we need to install it
+# it's essential to have Java 8 for both sparklyr and SparkR
+sudo apt install openjdk-8-jdk
+
+# download the latest version of Spark from https://spark.apache.org/downloads.html
+wget https://www-us.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
+
+# check the integrity of the downloaded file
+sha512sum spark-2.4.3-bin-hadoop2.7.tgz
+# compare the output with https://www.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz.sha512
+# proceed only if the two sha512 values match
+
+# extract the file
+tar -xvzf spark-2.4.3-bin-hadoop2.7.tgz
+
+# move and rename the folder containing Spark to /opt/spark
+sudo mv spark-2.4.3-bin-hadoop2.7/ /opt/spark
+
+# for ease of use we need to add Spark to our bash paths
+gedit ~/.bashrc
+# this will open your .bashrc file in a Gedit editor window
+# if working from an ssh shell use:
+nano ~/.bashrc
+
+# scroll to the bottom of the file and copy the following three lines there and then save and close the file
+# (if you are using Nano saving is ctrl-o and exiting is ctrl-x)
+# set spark paths
+export SPARK_HOME=/opt/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+# we need to reinitialize .bashrc for the changes to take effect
+source ~/.bashrc
+
+# start the Spark master
+start-master.sh
+
+# check the logfile for the Spark master address and the main UI address
+cd /opt/spark/logs
+ls
+# this should show one logfile which starts with "spark-...", no need to write the whole filename, we can use autocompletion by typing the first couple of letters and pressing TAB
+# let's see the contents of the logfile (use autocompletion to finish the name of your logfile after typing "spark")
+gedit <name of logfile>
+# again, if you are in an ssh shell, use Nano instead of Gedit:
+nano <name of logfile>
+
+# There is a lot of information in the logfile, but for now we are looking for two things only:
+# There will be a line with "Starting Spark master at spark://<name based on your system>:7077" (NOTE: the port number can be different if something is already running on port 7077)
+# This spark://<name based on your system>:7077 is your Spark master's address which we will need to attach slaves to the master and to start the spark context
+# There will also be a line with "MasterWebUI: Bound MasterWebUI to 0.0.0.0, and started at http://<ip address>:<port number>"
+# This port number is what we need to enter with localhost: to a browser address line to inspect our main Spark user interface
+# Note, that the default is http://localhost:8080 but depending on what other services maybe running the address can be different
+
+# starting a slave
+# (remember, if the port number provided in the logfile for the Spark master is not 7077, use that instead)
+start-slave.sh spark://<name based on your system>:7077
+
+# to inspect the Spark Master web UI open a browser and go to the following address: localhost:8080 (or whatever port number is provided in the logfile for MasterWebUI)
+
+# installing RStudio Server
+# we need to install R first 
+# if it is not installed yet, follow the instructions here: https://cran.r-project.org/bin/linux/ubuntu/
+# we need to install some more necessary packages
+sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev
+
+# now we can install RStudio Server
+# follow the instructions here: https://www.rstudio.com/products/rstudio/download-server/
+
+# add a test user to access the RStudio Server web UI
+sudo adduser test
+# after providing the password you can leave all the other user information blank, just press enter when prompted to provide them
+
+# to open the RStudio Server web UI open a browser and go to the following address: localhost:8787
+# proceed to log in with test user
+
+# install sparklyr
+install.packages("sparklyr")
+
+# if you have multiple version of Java on your system, also add the following line to the R script we are working on below the other Sys.setenv lines
+Sys.setenv(JAVA_HOME = "/usr/lib/jvm/java-8-openjdk-amd64")

@@ -1,0 +1,28 @@
+# If the Hadoop NameNode web UI doesn't work, it is important to know how to do things from the terminal (you can use the terminal in RStudio Server)
+
+# The detailed documentation can be found here: https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/FileSystemShell.html
+# However, we only need a handful for our most common operations.
+
+# create directory:
+hadoop fs -mkdir <path_on_hdfs><new_dir_name>
+# for example let's create a new input directory at the root of our HDFS file system
+hadoop fs -mkdir /input
+# now let's create a poltext2019 subdirectory
+hadoop fs -mkdir /input/poltext2019
+
+# copy a file from the Spark Master (remember, this is the (virtual) machine where the HDFS NameNode is running) into the HDFS:
+hadoop fs -put <some_file_with_path> <destination_path_on_hdfs>
+# for example let's put test.csv from our home folder (/home/test) into /input/poltext2019
+hadoop fs -put /home/test/test.csv /input/poltext2019
+# if we open the terminal in RStudio Server logged in as test user, we will be in test user's home directory, so we can just write:
+hadoop fs -put test.csv /input/poltext2019
+# also note that we didn't have to provide the full path for the hdfs, which would have been: hdfs://<name_or_address_of_spark_master>:<port_number>/input/poltext2019
+# but this full path is the path we will have to use to reference our file in the R code (see https://github.com/zkpti/poltext2019-sparktutorial/blob/master/sparklyr_example.R)
+
+# but how did we get test.csv in /home/test in the first place?
+# There are many possibilities, but the simplest for our use case is that we can upload files through RStudio Server from the files tab.
+# See instructions for file upload to and download from RStudio Server here: https://support.rstudio.com/hc/en-us/articles/200713893-Uploading-and-Downloading-Files
+
+# copy a file from the HDFS to the Spark Master:
+hadoop fs -get <some_file_with_path_on_hdfs> <destination_path>
+# a number of our operations will already involve collecting our tables into a single non-Spark table, which can easily be written to the Spark Master in the usual ways, thus this is not necessarily used too often.

@@ -1,0 +1,6 @@
+# Data source and license
+The <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/data/stackexchange_topics_for_poltext2019.csv">stackexchange_topics_for_poltext2019.csv</a> dataset was created from the Stack Exchange Data Dump made available by Stack Exchange, Inc., which can be freely downloaded <a href="https://archive.org/details/stackexchange">here</a>. The Stack Exchange Data Dump was made available under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> (CC BY-SA 4.0) license.
+
+The present dataset contains the <i>Body</i> and <i>Title</i> sections for posts with titles from the following topics: android, anime, aviation, gardening, money and retrocomputing. Each item has also been appended with a <i>Category</i> tag indicating the topic it belongs to.
+
+The <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/data/stackexchange_topics_for_poltext2019_preprocessed.csv">stackexchange_topics_for_poltext2019_preprocessed.csv</a> file contains the results of having applied the <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/R_code/quick_and_simple_text_preprocessing.R">quick_and_simple_text_preprocessing.R</a> script to the original stackexchange_topics_for_poltext2019.csv dataset.
