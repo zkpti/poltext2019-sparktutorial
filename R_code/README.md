@@ -5,9 +5,11 @@ If you are working on a <b>Google Cloud Dataproc</b> cluster:
 You will first have to move the preprocessed dataset to the HDFS. Use the commands from <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/presentation_materials/Hadoop_HDFS_basic_commands">this guide</a> to create the /input folder and then to copy the preprocessed dataset file into the HDFS.
 Also create an /eventlog folder on the HDFS for logging purposes.</br>
 Go to the terminal tab in the RStudio Server web UI:</br>
-&emsp; hadoop fs -mkdir /input</br>
-&emsp; hadoop fs -put /home/test/stackexchange_topics_for_poltext2019_preprocessed.csv /input</br>
-&emsp; hadoop fs -mkdir /eventlog</br>
+```sh
+hadoop fs -mkdir /input</br>
+hadoop fs -put /home/test/stackexchange_topics_for_poltext2019_preprocessed.csv /input</br>
+hadoop fs -mkdir /eventlog</br>
+```
 You need to use the <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/R_code/sparklyr_example_gc.R">sparklyr_example_gc.R</a> code for the text classification.
 
 If you are working on an <b>Ubuntu 18.04</b> system with a Spark cluster running in local mode:
