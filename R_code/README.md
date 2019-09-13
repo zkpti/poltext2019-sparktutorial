@@ -6,9 +6,9 @@ You will first have to move the preprocessed dataset to the HDFS. Use the comman
 Also create an /eventlog folder on the HDFS for logging purposes.</br>
 Go to the terminal tab in the RStudio Server web UI:</br>
 ```sh
-hadoop fs -mkdir /input</br>
-hadoop fs -put /home/test/stackexchange_topics_for_poltext2019_preprocessed.csv /input</br>
-hadoop fs -mkdir /eventlog</br>
+hadoop fs -mkdir /input
+hadoop fs -put /home/test/stackexchange_topics_for_poltext2019_preprocessed.csv /input
+hadoop fs -mkdir /eventlog
 ```
 You need to use the <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/R_code/sparklyr_example_gc.R">sparklyr_example_gc.R</a> code for the text classification.
 
