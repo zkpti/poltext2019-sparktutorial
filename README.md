@@ -7,7 +7,7 @@
 &#8226; <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/cluster_setup/GC_Spark_cluster_withRStudServ_setup.sh">Script for setting up RStudio Server, sparklyr and starting adding 'test' user on a Google Cloud Dataproc cluster</a>
 </br><b>And the same script condensed into a one line command, for quick reference:</b></br>
 ```sh
-sudo apt-get update && sudo apt-get install -y r-base r-base-dev libcurl4-openssl-dev libssl-dev libxml2-dev gdebi-core && wget https://download2.rstudio.org/server/debian9/x86_64/rstudio-server-1.2.1335-amd64.deb && sudo gdebi --n rstudio-server-1.2.1335-amd64.deb && sudo su - -c "R -e \\"install.packages('sparklyr', repos = 'http://cran.us.r-project.org')\"" && sudo adduser test
+sudo apt-get update && sudo apt-get install -y r-base r-base-dev libcurl4-openssl-dev libssl-dev libxml2-dev gdebi-core && wget https://download2.rstudio.org/server/debian9/x86_64/rstudio-server-1.2.1335-amd64.deb && sudo gdebi --n rstudio-server-1.2.1335-amd64.deb && sudo su - -c "R -e \"install.packages('sparklyr', repos = 'http://cran.us.r-project.org')\"" && sudo adduser test
 ```
 
 &#8226; <a href="https://github.com/zkpti/poltext2019-sparktutorial/blob/master/cluster_setup/ubuntu1804-spark-rstudio-server">Instructions for setting up a Spark cluster in local mode with RStudio Server on an Ubuntu 18.04 system</a>
